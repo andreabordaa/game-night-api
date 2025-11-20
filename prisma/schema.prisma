@@ -13,3 +13,53 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id       String @id @default(uuid())
+  email    String @unique
+  username String @unique
+  password String
+
+  ownedGames      Game[]          @relation("UserOwnedGames")
+  hostedEvents    Event[]         @relation("UserHostedEvents")
+  attendingEvents Event[]         @relation("UserAttendingEvents")
+  votes           Vote[]
+}
+
+model Game {
+  id          String @id @default(uuid())
+  name        String
+  minPlayers  Int
+  maxPlayers  Int
+  description String?
+
+  ownerId String
+  owner   User   @relation("UserOwnedGames", fields: [ownerId], references: [id], onDelete: Cascade)
+  votes   Vote[]
+}
+
+model Event {
+  id          String   @id @default(uuid())
+  name        String
+  location    String
+  eventDate   DateTime
+  description String?
+
+  hostId    String
+  host      User            @relation("UserHostedEvents", fields: [hostId], references: [id], onDelete: Cascade)
+  attendees User[]          @relation("UserAttendingEvents")
+  votes     Vote[]
+}
+
+model Vote {
+  id      String @id @default(uuid())
+  userId  String
+  eventId String
+  gameId  String
+
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  event Event @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  game  Game  @relation(fields: [gameId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, eventId])
+}
