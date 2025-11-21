@@ -1,0 +1,17 @@
+type: object
+properties:
+  id:
+    type: string
+    format: uuid
+  name:
+    type: string
+  location:
+    type: string
+  eventDate:
+    type: string
+    format: date-time
+  description:
+    type: string
+  hostId:
+    type: string
+    format: uuid

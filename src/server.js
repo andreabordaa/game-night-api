@@ -1,16 +1,28 @@
 import express from 'express';
 import cors from 'cors';
-import morgan from 'morgan';
-
+import authRoutes from './routes/authRoutes.js';
+import userRoutes from './routes/userRoutes.js';
 import eventRoutes from './routes/eventRoutes.js';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 app.use(cors());
 
-app.use(morgan('tiny'));
+if (process.env.NODE_ENV === 'development') {
+  const morganModule = await import('morgan');
+  const morgan = morganModule.default;
+  app.use(morgan('tiny'));
+}
+
+import swaggerUi from 'swagger-ui-express';
+import yaml from 'yamljs';
+
+const swaggerDocument = yaml.load('./public/bundled.yaml');
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use(express.json());
+app.use('/api/auth', authRoutes);
+app.use('/api/users', userRoutes);
 app.use('/api/events', eventRoutes);
 
 app.use((req, res, next) => {

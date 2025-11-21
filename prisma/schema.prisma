@@ -5,7 +5,7 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client"
+  provider = "prisma-client-js"
   output   = "../src/generated/prisma"
 }
 
@@ -19,6 +19,7 @@ model User {
   email    String @unique
   username String @unique
   password String
+  role Role @default(USER)
 
   ownedGames      Game[]          @relation("UserOwnedGames")
   hostedEvents    Event[]         @relation("UserHostedEvents")
@@ -62,4 +63,9 @@ model Vote {
   game  Game  @relation(fields: [gameId], references: [id], onDelete: Cascade)
 
   @@unique([userId, eventId])
+}
+
+enum Role {
+  USER
+  ADMIN
 }

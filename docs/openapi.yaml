@@ -1,0 +1,45 @@
+openapi: 3.0.0
+info:
+  title: Game Night API
+  description: API for managing Game Night events, users, and games.
+  version: 1.0.0
+servers:
+  - url: http://localhost:3000
+    description: Local development server
+
+tags:
+  - name: Auth
+    description: Authentication endpoints
+  - name: Users
+    description: User management endpoints
+  - name: Events
+    description: Event management endpoints
+
+paths:
+  /api/auth/signup:
+    $ref: 'paths/auth.yaml#/api/auth/signup'
+  /api/auth/login:
+    $ref: 'paths/auth.yaml#/api/auth/login'
+  /api/users:
+    $ref: 'paths/users.yaml#/api/users'
+  /api/users/me:
+    $ref: 'paths/users.yaml#/api/users/me'
+  /api/users/{id}/role:
+    $ref: 'paths/users.yaml#/api/users/{id}/role'
+  /api/events/host:
+    $ref: 'paths/events.yaml#/api/events/host'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    User:
+      $ref: 'components/schemas/User.yaml'
+    Event:
+      $ref: 'components/schemas/Event.yaml'
+
+security:
+  - bearerAuth: []
