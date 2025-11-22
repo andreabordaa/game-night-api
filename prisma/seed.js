@@ -49,6 +49,42 @@ async function main() {
     createdUsers.forEach((u) => {
       console.log(`   - ${u.username} (${u.role})`);
     });
+
+    const eventsData = [
+      {
+        name: 'Board Game Night',
+        location: 'Community Center',
+        eventDate: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000), // 3 days from now
+        description: 'An evening of fun board games with friends.',
+        hostId: createdUsers[1].id, // andrea
+      },
+      {
+        name: 'Trivia Night',
+        location: 'Local Cafe',
+        eventDate: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000), // 5 days from now
+        description: 'Test your knowledge and win prizes!',
+        hostId: createdUsers[2].id, // ethan
+      },
+      {
+        name: 'Strategy Games Meetup',
+        location: 'Gaming Hub',
+        eventDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days from now
+        description: 'For lovers of strategy and tactical games.',
+        hostId: createdUsers[3].id, // pablo
+      },
+    ];
+
+    const createdEvents = await Promise.all(
+      eventsData.map((event) => prisma.event.create({ data: event })),
+    );
+
+    console.log(`Seed completed! Created ${createdEvents.length} events.`);
+
+    createdEvents.forEach((e) => {
+      console.log(
+        `   - ${e.name} hosted by ${createdUsers.find((u) => u.id === e.hostId).username}`,
+      );
+    });
   } catch (error) {
     console.error('Seed failed:', error);
     process.exit(1);
