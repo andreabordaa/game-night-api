@@ -18,7 +18,7 @@ export async function getAllGamesHandler(req, res) {
     // offset=10,
   } = req.query;
   const filter = {};
-  // if (ownerId) filter.ownerId = ownerId;
+  if (ownerId) filter.ownerId = ownerId;
   if (search) filter.search = search;
   filter.sortBy = sortBy;
   filter.sortOrder = sortOrder;
@@ -44,8 +44,7 @@ export async function createGameHandler(req, res) {
     minPlayers: req.body.minPlayers,
     maxPlayers: req.body.maxPlayers,
 
-    ownerId: req.user.id,
-
+    ownerId: req.user.id, 
   };
   let newGame = await createGame(data);
   res.status(201).json(newGame);
@@ -56,8 +55,7 @@ export async function updateGameHandler(req, res) {
   const updates = {};
   if (req.body.name) updates.name = req.body.name;
   if (req.body.description) updates.description = req.body.description;
-    if (req.body.minPlayers) updates.minPlayers = req.body.minPlayers;
-  if (req.body.maxPlayers) updates.maxPlayers = req.body.maxPlayers;
+  if (req.body.ownerId) updates.ownerId = req.body.ownerId;
   const updatedGame = await updateGame(id, updates);
   res.status(200).json(updatedGame);
 }

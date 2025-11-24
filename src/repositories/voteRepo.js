@@ -22,17 +22,9 @@ export async function getAll(filter) {
       description: true,
       minPlayers: true,
       maxPlayers: true,
-      owner: {
-        select: {
-          id: true,
-          username: true,
-        },
-      },
+      owner: true,
     },
-    orderBy:
-      filter && filter.sortBy
-        ? { [filter.sortBy]: filter.sortOrder }
-        : undefined,
+    orderBy: filter && filter.sortBy ? { [filter.sortBy]: filter.sortOrder } : undefined,
     take: filter && filter.limit ? filter.limit : undefined,
     skip: filter && filter.offset ? filter.offset : undefined,
   });
@@ -48,12 +40,8 @@ export async function getById(id) {
       description: true,
       minPlayers: true,
       maxPlayers: true,
-      owner: {
-        select: {
-          id: true,
-          username: true,
-        },
-      },
+      owner: true,
+      description: true,
     },
   });
   return game;

@@ -19,16 +19,16 @@ model User {
   email    String @unique
   username String @unique
   password String
-  role Role @default(USER)
+  role     Role   @default(USER)
 
-  ownedGames      Game[]          @relation("UserOwnedGames")
-  hostedEvents    Event[]         @relation("UserHostedEvents")
-  attendingEvents Event[]         @relation("UserAttendingEvents")
+  ownedGames      Game[]  @relation("UserOwnedGames")
+  hostedEvents    Event[] @relation("UserHostedEvents")
+  attendingEvents Event[] @relation("UserAttendingEvents")
   votes           Vote[]
 }
 
 model Game {
-  id          String @id @default(uuid())
+  id          String  @id @default(uuid())
   name        String
   minPlayers  Int
   maxPlayers  Int
@@ -47,8 +47,8 @@ model Event {
   description String?
 
   hostId    String
-  host      User            @relation("UserHostedEvents", fields: [hostId], references: [id], onDelete: Cascade)
-  attendees User[]          @relation("UserAttendingEvents")
+  host      User   @relation("UserHostedEvents", fields: [hostId], references: [id], onDelete: Cascade)
+  attendees User[] @relation("UserAttendingEvents")
   votes     Vote[]
 }
 
