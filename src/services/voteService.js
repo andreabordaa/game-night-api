@@ -6,14 +6,19 @@ import {
   countVotesByGame,
   update,
   remove,
-  getAllVotedGameAndEventIds
+  getAllVotedGameAndEventIds as repoGetAllVotedGameAndEventIds,
+  getVotesByEvent as repoGetVotesByEvent,
 } from '../repositories/voteRepo.js';
+
 // Get all unique gameIds and eventIds that have been voted on
 export async function getAllVotedGameAndEventIds() {
-  return await getAllVotedGameAndEventIds();
+  return await repoGetAllVotedGameAndEventIds();
 }
 
-
+// GET /events/:eventId/votes
+export async function getVotesByEvent(eventId) {
+  return await repoGetVotesByEvent(eventId);
+}
 
 // GET /votes/host
 export async function getAllVotes(filter) {
@@ -40,14 +45,13 @@ export async function eventCountVotes(eventId) {
   return await countVotesByEvent(eventId);
 }
 
-
 export async function gameCountVotes(gameId) {
   return await countVotesByGame(gameId);
 }
 
 // PUT /events/:id
 export async function updateVote(id, data) {
-  const updatedVote= await update(id, data);
+  const updatedVote = await update(id, data);
   if (updatedVote) return updatedVote;
   else {
     const error = new Error(`Cannot find vote with id ${id}`);
@@ -55,7 +59,6 @@ export async function updateVote(id, data) {
     throw error;
   }
 }
-
 
 export async function deleteVote(id) {
   const result = await remove(id);
@@ -66,4 +69,3 @@ export async function deleteVote(id) {
     throw error;
   }
 }
-

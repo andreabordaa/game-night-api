@@ -4,6 +4,7 @@ import authRoutes from './routes/authRoutes.js';
 import userRoutes from './routes/userRoutes.js';
 import eventRoutes from './routes/eventRoutes.js';
 import gameRoutes from './routes/gameRoutes.js';
+import voteRoutes from './routes/voteRoutes.js';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -31,6 +32,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/events', eventRoutes);
 app.use('/api/games', gameRoutes);
+app.use('/api/votes', voteRoutes);
 
 app.use((req, res, next) => {
   const err = new Error('Not Found');

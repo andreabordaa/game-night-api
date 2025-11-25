@@ -44,4 +44,16 @@ router.post(
   eventController.joinEventHandler,
 );
 
+router.get(
+  '/:id/votes',
+  eventValidator.validateEventId,
+  authenticate,
+  async (req, res) => {
+    const { getVotesByEvent } = await import('../services/voteService.js');
+    const eventId = req.params.id;
+    const votes = await getVotesByEvent(eventId);
+    res.status(200).json(votes);
+  },
+);
+
 export default router;
