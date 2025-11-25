@@ -10,10 +10,9 @@ import {
 } from '../services/voteService.js';
 // GET /vote/host
 export async function getAllVotesHandler(req, res) {
-    let vote = await getAllVotedGameAndEventIds();
-    res.status(200).json(vote);
+  let vote = await getAllVotedGameAndEventIds();
+  res.status(200).json(vote);
 }
-
 
 export async function getVoteByIdHandler(req, res) {
   let id = req.params.id;
@@ -22,26 +21,36 @@ export async function getVoteByIdHandler(req, res) {
 }
 
 export async function createVoteHandler(req, res) {
-  const data = {
-    userId: req.user.id,
-    gameId: req.body.gameId,
-    eventId: req.body.eventId,
-  };
-  let newVote = await createVote(data);
-  res.status(201).json(newVote);
+  try {
+    const data = {
+      userId: req.user.id,
+      gameId: req.body.gameId,
+      eventId: req.body.eventId,
+    };
+    let newVote = await createVote(data);
+    res.status(201).json(newVote);
+  } catch (error) {
+    // Handle unique constraint violation (P2002)
+    if (error.code === 'P2002') {
+      return res.status(409).json({
+        error:
+          'You have already voted for this event. You can only vote once per event.',
+      });
+    }
+    throw error;
+  }
 }
 
 export async function updateVoteHandler(req, res) {
-    const id = req.params.id;
-    const updates = {};
+  const id = req.params.id;
+  const updates = {};
 
-    // Only allow updating gameId and/or eventId
-    if (req.body.gameId) updates.gameId = req.body.gameId;
-    if (req.body.eventId) updates.eventId = req.body.eventId;    
-    
-    const updatedVote = await updateVote(id, updates);
-    res.status(200).json(updatedVote);
+  // Only allow updating gameId and/or eventId
+  if (req.body.gameId) updates.gameId = req.body.gameId;
+  if (req.body.eventId) updates.eventId = req.body.eventId;
 
+  const updatedVote = await updateVote(id, updates);
+  res.status(200).json(updatedVote);
 }
 export async function deleteVoteHandler(req, res) {
   let id = req.params.id;

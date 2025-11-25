@@ -19,7 +19,6 @@ model User {
   hostedEvents    Event[] @relation("UserHostedEvents")
   attendingEvents Event[] @relation("UserAttendingEvents")
   votes           Vote[]
-  attendingEvents Event[] @relation("UserAttendingEvents")
 }
 
 model Game {

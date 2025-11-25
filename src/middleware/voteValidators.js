@@ -12,9 +12,24 @@ export const validateEventId = [
   handleValidationErrors,
 ];
 
-// const allowedVoteSortFields = ['id', 'createdAt'];
-// const allowedVoteSortOrders = ['asc', 'desc'];
+const allowedVoteSortFields = ['id', 'createdAt'];
+const allowedVoteSortOrders = ['asc', 'desc'];
 
+export const validateCreateVote = [
+  body('eventId')
+    .notEmpty()
+    .withMessage('eventId is required')
+    .isUUID()
+    .withMessage('eventId must be a valid UUID'),
+
+  body('gameId')
+    .notEmpty()
+    .withMessage('gameId is required')
+    .isUUID()
+    .withMessage('gameId must be a valid UUID'),
+
+  handleValidationErrors,
+];
 
 export const validateUpdateVote = [
   body('eventId')
@@ -22,15 +37,9 @@ export const validateUpdateVote = [
     .isUUID()
     .withMessage('eventId must be a valid UUID'),
 
-  body('gameId')
-    .optional()
-    .isUUID()
-    .withMessage('gameId must be a valid UUID'),
+  body('gameId').optional().isUUID().withMessage('gameId must be a valid UUID'),
 
-  body('userId')
-    .optional()
-    .isUUID()
-    .withMessage('userId must be a valid UUID'),
+  body('userId').optional().isUUID().withMessage('userId must be a valid UUID'),
 
   handleValidationErrors,
 ];
@@ -45,7 +54,9 @@ export const validateEventVotesQuery = [
   query('sortOrder')
     .optional()
     .isIn(allowedVoteSortOrders)
-    .withMessage(`sortOrder must be one of: ${allowedVoteSortOrders.join(', ')}`),
+    .withMessage(
+      `sortOrder must be one of: ${allowedVoteSortOrders.join(', ')}`,
+    ),
 
   query('limit')
     .optional()
