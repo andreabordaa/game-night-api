@@ -1,0 +1,22 @@
+type: object
+properties:
+  id:
+    type: string
+    format: uuid
+  name:
+    type: string
+  minPlayers:
+    type: integer
+  maxPlayers:
+    type: integer
+  description:
+    type: string
+  ownerId:
+    type: string
+    format: uuid
+required:
+  - id
+  - name
+  - minPlayers
+  - maxPlayers
+  - ownerId
