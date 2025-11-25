@@ -9,13 +9,15 @@ datasource db {
 }
 
 model User {
-  id              String  @id @default(uuid())
-  email           String  @unique
-  username        String  @unique
-  password        String
-  role            Role    @default(USER)
-  hostedEvents    Event[] @relation("UserHostedEvents")
+  id       String @id @default(uuid())
+  email    String @unique
+  username String @unique
+  password String
+  role     Role   @default(USER)
+
   ownedGames      Game[]  @relation("UserOwnedGames")
+  hostedEvents    Event[] @relation("UserHostedEvents")
+  attendingEvents Event[] @relation("UserAttendingEvents")
   votes           Vote[]
   attendingEvents Event[] @relation("UserAttendingEvents")
 }
@@ -37,10 +39,11 @@ model Event {
   location    String
   eventDate   DateTime
   description String?
-  hostId      String
-  host        User     @relation("UserHostedEvents", fields: [hostId], references: [id], onDelete: Cascade)
-  votes       Vote[]
-  attendees   User[]   @relation("UserAttendingEvents")
+
+  hostId    String
+  host      User   @relation("UserHostedEvents", fields: [hostId], references: [id], onDelete: Cascade)
+  attendees User[] @relation("UserAttendingEvents")
+  votes     Vote[]
 }
 
 model Vote {
