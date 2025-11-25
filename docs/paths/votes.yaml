@@ -1,0 +1,48 @@
+ /api/votes:
+  get:
+    summary: Get voted game and event IDs
+    tags: [Votes]
+    responses:
+      200:
+        description: Object with arrays of unique voted gameIds and eventIds
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                gameIds:
+                  type: array
+                  items:
+                    type: string
+                    format: uuid
+                eventIds:
+                  type: array
+                  items:
+                    type: string
+                    format: uuid
+      401:
+        description: Unauthorized
+
+ /api/votes/{id}:
+  get:
+    summary: Get a vote by ID
+    tags: [Votes]
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+          format: uuid
+        description: Vote ID
+    responses:
+      200:
+        description: Vote found
+        content:
+          application/json:
+            schema:
+              $ref: '../components/schemas/Vote.yaml'
+      401:
+        description: Unauthorized
+      404:
+        description: Vote not found

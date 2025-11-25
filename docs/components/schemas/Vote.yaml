@@ -1,0 +1,20 @@
+type: object
+required: [id, user, eventId, gameId]
+properties:
+  id:
+    type: string
+    format: uuid
+  user:
+    type: object
+    properties:
+      id:
+        type: string
+        format: uuid
+      username:
+        type: string
+  eventId:
+    type: string
+    format: uuid
+  gameId:
+    type: string
+    format: uuid

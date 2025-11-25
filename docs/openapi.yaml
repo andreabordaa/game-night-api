@@ -14,6 +14,10 @@ tags:
     description: User management endpoints
   - name: Events
     description: Event management endpoints
+  - name: Games
+    description: Game management endpoints
+  - name: Votes
+    description: Voting endpoints
 
 paths:
   /api/auth/signup:
@@ -34,6 +38,14 @@ paths:
     $ref: 'paths/events.yaml#/~1api~1events~1{id}'
   /api/events/{id}/join:
     $ref: 'paths/events.yaml#/~1api~1events~1{id}~1join'
+  /api/games:
+    $ref: 'paths/games.yaml#/~1api~1games'
+  /api/games/{id}:
+    $ref: 'paths/games.yaml#/~1api~1games~1{id}'
+  /api/votes:
+    $ref: 'paths/votes.yaml#/~1api~1votes'
+  /api/votes/{id}:
+    $ref: 'paths/votes.yaml#/~1api~1votes~1{id}'
 
 components:
   securitySchemes:
@@ -46,6 +58,10 @@ components:
       $ref: 'components/schemas/User.yaml'
     Event:
       $ref: 'components/schemas/Event.yaml'
+    Game:
+      $ref: 'components/schemas/Game.yaml'
+    Vote:
+      $ref: 'components/schemas/Vote.yaml'
 
 security:
   - bearerAuth: []

@@ -1,0 +1,67 @@
+ /api/games:
+  get:
+    summary: Get list of games
+    tags: [Games]
+    parameters:
+      - in: query
+        name: search
+        schema:
+          type: string
+        description: Text search for game name or description
+      - in: query
+        name: sortBy
+        schema:
+          type: string
+          enum: [id, name, minPlayers, maxPlayers]
+        description: Field to sort by
+      - in: query
+        name: sortOrder
+        schema:
+          type: string
+          enum: [asc, desc]
+        description: Sort order
+      - in: query
+        name: minPlayers
+        schema:
+          type: integer
+        description: Minimum number of players
+      - in: query
+        name: maxPlayers
+        schema:
+          type: integer
+        description: Maximum number of players
+    responses:
+      200:
+        description: List of games
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '../components/schemas/Game.yaml'
+      401:
+        description: Unauthorized
+
+ /api/games/{id}:
+  get:
+    summary: Get a game by ID
+    tags: [Games]
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+          format: uuid
+        description: Game ID
+    responses:
+      200:
+        description: Game found
+        content:
+          application/json:
+            schema:
+              $ref: '../components/schemas/Game.yaml'
+      401:
+        description: Unauthorized
+      404:
+        description: Game not found

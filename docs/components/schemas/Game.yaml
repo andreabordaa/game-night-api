@@ -1,0 +1,20 @@
+type: object
+required: [id, name, minPlayers, maxPlayers, ownerId]
+properties:
+  id:
+    type: string
+    format: uuid
+  name:
+    type: string
+  minPlayers:
+    type: integer
+  maxPlayers:
+    type: integer
+  description:
+    type: string
+    nullable: true
+  ownerId:
+    type: string
+    format: uuid
+  owner:
+    $ref: '../components/schemas/User.yaml'
