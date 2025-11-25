@@ -6,6 +6,8 @@ info:
 servers:
   - url: http://localhost:3000
     description: Local development server
+  - url: https://game-night-api-e4x9.onrender.com
+    description: Production server
 
 tags:
   - name: Auth
@@ -38,6 +40,8 @@ paths:
     $ref: 'paths/events.yaml#/~1api~1events~1{id}'
   /api/events/{id}/join:
     $ref: 'paths/events.yaml#/~1api~1events~1{id}~1join'
+  /api/events/{id}/votes:
+    $ref: 'paths/events.yaml#/~1api~1events~1{id}~1votes'
   /api/games:
     $ref: 'paths/games.yaml#/~1api~1games'
   /api/games/{id}:
