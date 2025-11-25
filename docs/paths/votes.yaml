@@ -1,0 +1,128 @@
+/api/votes:
+  get:
+    summary: Get all votes
+    tags: [Votes]
+    responses:
+      200:
+        description: List of votes
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '../components/schemas/Vote.yaml'
+      401:
+        description: Unauthorized
+
+  post:
+    summary: Create a new vote
+    tags: [Votes]
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            required: [eventId, gameId]
+            properties:
+              eventId:
+                type: string
+                format: uuid
+              gameId:
+                type: string
+                format: uuid
+    responses:
+      201:
+        description: Vote created successfully
+        content:
+          application/json:
+            schema:
+              $ref: '../components/schemas/Vote.yaml'
+      400:
+        description: Validation error
+      401:
+        description: Unauthorized
+      409:
+        description: Conflict (Vote already exists)
+
+/api/votes/{id}:
+  get:
+    summary: Get vote by ID
+    tags: [Votes]
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+          format: uuid
+        description: Vote ID
+    responses:
+      200:
+        description: Vote found
+        content:
+          application/json:
+            schema:
+              $ref: '../components/schemas/Vote.yaml'
+      401:
+        description: Unauthorized
+      404:
+        description: Vote not found
+
+  put:
+    summary: Update an existing vote
+    tags: [Votes]
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+          format: uuid
+        description: Vote ID
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              gameId:
+                type: string
+                format: uuid
+    responses:
+      200:
+        description: Vote updated successfully
+        content:
+          application/json:
+            schema:
+              $ref: '../components/schemas/Vote.yaml'
+      400:
+        description: Validation error
+      401:
+        description: Unauthorized
+      403:
+        description: Forbidden (not the owner)
+      404:
+        description: Vote not found
+
+  delete:
+    summary: Delete a vote
+    tags: [Votes]
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+          format: uuid
+        description: Vote ID
+    responses:
+      204:
+        description: Vote deleted successfully
+      401:
+        description: Unauthorized
+      403:
+        description: Forbidden (not the owner)
+      404:
+        description: Vote not found
