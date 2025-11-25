@@ -17,23 +17,23 @@ tags:
 
 paths:
   /api/auth/signup:
-    $ref: 'paths/auth.yaml#/api/auth/signup'
+    $ref: 'paths/auth.yaml#/~1api~1auth~1signup'
   /api/auth/login:
-    $ref: 'paths/auth.yaml#/api/auth/login'
+    $ref: 'paths/auth.yaml#/~1api~1auth~1login'
   /api/users:
-    $ref: 'paths/users.yaml#/api/users'
+    $ref: 'paths/users.yaml#/~1api~1users'
   /api/users/me:
-    $ref: 'paths/users.yaml#/api/users/me'
+    $ref: 'paths/users.yaml#/~1api~1users~1me'
   /api/users/{id}/role:
-    $ref: 'paths/users.yaml#/api/users/{id}/role'
+    $ref: 'paths/users.yaml#/~1api~1users~1{id}~1role'
   /api/events/host:
-    $ref: 'paths/events.yaml#/api/events/host'
+    $ref: 'paths/events.yaml#/~1api~1events~1host'
   /api/events:
-    $ref: 'paths/events.yaml#/api/events'
+    $ref: 'paths/events.yaml#/~1api~1events'
   /api/events/{id}:
-    $ref: 'paths/events.yaml#/api/events/{id}'
+    $ref: 'paths/events.yaml#/~1api~1events~1{id}'
   /api/events/{id}/join:
-    $ref: 'paths/events.yaml#/api/events/{id}/join'
+    $ref: 'paths/events.yaml#/~1api~1events~1{id}~1join'
 
 components:
   securitySchemes:
