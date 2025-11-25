@@ -19,4 +19,4 @@ properties:
   attendees:
     type: array
     items:
-      $ref: '../components/schemas/User.yaml'
+      $ref: './User.yaml'

@@ -2,6 +2,15 @@
   get:
     summary: Get all users (Admin only)
     tags: [Users]
+    parameters:
+      - name: role
+        in: query
+        required: false
+        description: Filter users by role
+        schema:
+          type: string
+          enum: [USER, ADMIN]
+          example: USER
     responses:
       200:
         description: List of all users
