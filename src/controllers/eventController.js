@@ -16,10 +16,12 @@ export async function getEventByIdHandler(req, res) {
 
 // POST /events/
 export async function createEventHandler(req, res) {
+  const normalizedDate = new Date(req.body.eventDate);
+
   const data = {
     name: req.body.name,
     location: req.body.location,
-    eventDate: req.body.eventDate,
+    eventDate: normalizedDate,
     description: req.body.description,
 
     hostId: req.user.id,
@@ -36,7 +38,7 @@ export async function updateEventHandler(req, res) {
   const updates = {};
   if (req.body.name) updates.name = req.body.name;
   if (req.body.location) updates.location = req.body.location;
-  if (req.body.eventDate) updates.eventDate = req.body.eventDate;
+  if (req.body.eventDate) updates.eventDate = new Date(req.body.eventDate);
   if (req.body.description) updates.description = req.body.description;
 
   const updatedEvent = await eventService.updateEvent(id, updates);

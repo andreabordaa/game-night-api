@@ -2,12 +2,27 @@ import prisma from '../config/db.js';
 
 // GET /events/host
 export async function findCurrentUserEvents(id) {
-  return await prisma.event.findMany({ where: { hostId: id } });
+  return await prisma.event.findMany({
+    where: { hostId: id },
+  });
 }
 
 // GET /events/:id
 export async function findById(id) {
-  return await prisma.event.findUnique({ where: { id } });
+  return await prisma.event.findUnique({
+    where: { id },
+    include: {
+      attendees: {
+        select: {
+          id: true,
+          email: true,
+          username: true,
+          role: true,
+        },
+      },
+      votes: true,
+    },
+  });
 }
 
 // POST /events/
@@ -49,7 +64,16 @@ export async function remove(id) {
 export async function findEvent(id) {
   const joinedEvent = await prisma.event.findUnique({
     where: { id },
-    include: { attendees: true },
+    include: {
+      attendees: {
+        select: {
+          id: true,
+          email: true,
+          username: true,
+          role: true,
+        },
+      },
+    },
   });
 
   return joinedEvent;
@@ -63,7 +87,16 @@ export async function join(eventId, userId) {
         connect: { id: userId },
       },
     },
-    include: { attendees: true },
+    include: {
+      attendees: {
+        select: {
+          id: true,
+          email: true,
+          username: true,
+          role: true,
+        },
+      },
+    },
   });
 
   return joinedUser;

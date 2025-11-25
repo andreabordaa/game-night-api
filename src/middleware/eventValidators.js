@@ -2,9 +2,7 @@ import { param, body } from 'express-validator';
 import { handleValidationErrors } from './handleValidationErrors.js';
 
 export const validateEventId = [
-  param('id')
-    .isInt({ min: 1 })
-    .withMessage('Event id must be a positive integer'),
+  param('id').isUUID().withMessage('Event id must be a valid UUID'),
   handleValidationErrors,
 ];
 

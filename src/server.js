@@ -22,6 +22,11 @@ const swaggerDocument = yaml.load('./public/bundled.yaml');
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use(express.json());
+
+app.get('/', (req, res) => {
+  res.json({ message: 'Welcome to Game Night API' });
+});
+
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/events', eventRoutes);
