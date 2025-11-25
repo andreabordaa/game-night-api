@@ -9,17 +9,18 @@ Users can:
 - Join events and see any other event attendees
 - Manage votes on favorite games
 
-##Built With
+## Built With
 
 - Node.js
 - Express
 - Prisma
 - PostgresSQL
 
-##Deployment
-This API was deployed on [Render](add render link)
+## Deployment
 
-##Installation
+This API was deployed on **Render**
+
+## Installation
 
 1. Clone the repository
 2. Install dependences
