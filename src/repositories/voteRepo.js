@@ -34,7 +34,6 @@ export async function getAllVotedGameAndEventIds() {
 // Return array of unique gameIds that have at least one vote
 export async function getVotedGameIds() {
   const games = await prisma.vote.findMany({
-    where: { gameId: { not: null } },
     distinct: ['gameId'],
     select: { gameId: true },
   });
@@ -44,7 +43,6 @@ export async function getVotedGameIds() {
 // Return array of unique eventIds that have at least one vote
 export async function getVotedEventIds() {
   const events = await prisma.vote.findMany({
-    where: { eventId: { not: null } },
     distinct: ['eventId'],
     select: { eventId: true },
   });
