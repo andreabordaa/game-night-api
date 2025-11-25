@@ -439,16 +439,6 @@ paths:
               - asc
               - desc
           description: Sort order
-        - in: query
-          name: minPlayers
-          schema:
-            type: integer
-          description: Minimum number of players
-        - in: query
-          name: maxPlayers
-          schema:
-            type: integer
-          description: Maximum number of players
       responses:
         '200':
           description: List of games
