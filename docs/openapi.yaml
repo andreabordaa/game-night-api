@@ -17,7 +17,7 @@ tags:
   - name: Games
     description: Game management endpoints
   - name: Votes
-    description: Vote management endpoints
+    description: Voting endpoints
 
 paths:
   /api/auth/signup:
