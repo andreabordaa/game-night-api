@@ -1,6 +1,6 @@
 # Game-Night-API
 
-##About The Project
+## About The Project
 The **Game-Night-API** is a backend service used to plan and create board game events, games, and user participation.
 Users can:
 
