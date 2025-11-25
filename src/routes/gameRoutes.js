@@ -19,12 +19,12 @@ const router = express.Router();
 
 router.get('/', authenticate, validateGameQuery, getAllGamesHandler);
 
-router.get('/:id', validateGameId, getGameByIdHandler);
+router.get('/:id',authenticate, validateGameId, getGameByIdHandler);
 
 router.post('/', authenticate, validateCreateGame, createGameHandler);
 
-router.put('/:id', validateUpdateGame, updateGameHandler);
+router.put('/:id', authenticate,validateUpdateGame, updateGameHandler);
 
-router.delete('/:id', validateGameId, deleteGameHandler);
+router.delete('/:id',authenticate, validateGameId, deleteGameHandler);
 
 export default router;

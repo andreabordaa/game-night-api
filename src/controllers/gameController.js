@@ -56,7 +56,7 @@ export async function updateGameHandler(req, res) {
   const updates = {};
   if (req.body.name) updates.name = req.body.name;
   if (req.body.description) updates.description = req.body.description;
-    if (req.body.minPlayers) updates.minPlayers = req.body.minPlayers;
+  if (req.body.minPlayers) updates.minPlayers = req.body.minPlayers;
   if (req.body.maxPlayers) updates.maxPlayers = req.body.maxPlayers;
   const updatedGame = await updateGame(id, updates);
   res.status(200).json(updatedGame);

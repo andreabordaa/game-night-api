@@ -1,67 +1,59 @@
 import {
-  getAllGames,
-  getGameById,
-  createGame,
-  updateGame,
-  deleteGame,
-} from '../services/gameService.js';
-// GET /games/host
-export async function getAllGamesHandler(req, res) {
-  const {
-    // ownerId,
-    search,
-    sortBy = 'id',
-    sortOrder = 'asc',
-    minPlayers,
-    maxPlayers,
-    // limit= 10,
-    // offset=10,
-  } = req.query;
-  const filter = {};
-  if (ownerId) filter.ownerId = ownerId;
-  if (search) filter.search = search;
-  filter.sortBy = sortBy;
-  filter.sortOrder = sortOrder;
-  filter.minPlayers = minPlayers;
-  filter.maxPlayers = maxPlayers;
-
-  // filter.limit = parseInt(limit);
-  // filter.offset = parseInt(offset);
-  let result = await getAllGames(filter);
-  res.status(200).json(result);
+  // getAllGames,
+  getVoteById,
+  createVote,
+  updateVote,
+  eventCountVotes,
+  gameCountVotes,
+  deleteVote,
+  getAllVotedGameAndEventIds,
+} from '../services/voteService.js';
+// GET /vote/host
+export async function getAllVotesHandler(req, res) {
+    let vote = await getAllVotedGameAndEventIds();
+    res.status(200).json(vote);
 }
 
-export async function getGameByIdHandler(req, res) {
+
+export async function getVoteByIdHandler(req, res) {
   let id = req.params.id;
-  let game = await getGameById(id);
+  let game = await getVoteById(id);
   res.status(200).json(game);
 }
 
-export async function createGameHandler(req, res) {
+export async function createVoteHandler(req, res) {
   const data = {
-    name: req.body.name,
-    description: req.body.description,
-    minPlayers: req.body.minPlayers,
-    maxPlayers: req.body.maxPlayers,
-
-    ownerId: req.user.id, 
+    userId: req.user.id,
+    gameId: req.body.gameId,
+    eventId: req.body.eventId,
   };
-  let newGame = await createGame(data);
-  res.status(201).json(newGame);
+  let newVote = await createVote(data);
+  res.status(201).json(newVote);
 }
 
-export async function updateGameHandler(req, res) {
-  let id = req.params.id;
-  const updates = {};
-  if (req.body.name) updates.name = req.body.name;
-  if (req.body.description) updates.description = req.body.description;
-  if (req.body.ownerId) updates.ownerId = req.body.ownerId;
-  const updatedGame = await updateGame(id, updates);
-  res.status(200).json(updatedGame);
-}
+export async function updateVoteHandler(req, res) {
+    const id = req.params.id;
+    const updates = {};
 
-export async function deleteGameHandler(req, res) {
+    // Only allow updating gameId and/or eventId
+    if (req.body.gameId) updates.gameId = req.body.gameId;
+    if (req.body.eventId) updates.eventId = req.body.eventId;    
+    
+    const updatedVote = await updateVote(id, updates);
+    res.status(200).json(updatedVote);
+
+}
+export async function deleteVoteHandler(req, res) {
   let id = req.params.id;
   await deleteGame(id);
   res.status(204).send();
+}
+
+export async function getAllVotedGameAndEventIdsHandler(req, res) {
+  try {
+    const result = await getAllVotedGameAndEventIds();
+    res.status(200).json(result);
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to fetch voted game and event IDs' });
+  }
 }
