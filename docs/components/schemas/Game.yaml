@@ -17,4 +17,4 @@ properties:
     type: string
     format: uuid
   owner:
-    $ref: '../components/schemas/User.yaml'
+    $ref: './User.yaml'
