@@ -28,6 +28,12 @@ paths:
     $ref: 'paths/users.yaml#/api/users/{id}/role'
   /api/events/host:
     $ref: 'paths/events.yaml#/api/events/host'
+  /api/events:
+    $ref: 'paths/events.yaml#/api/events'
+  /api/events/{id}:
+    $ref: 'paths/events.yaml#/api/events/{id}'
+  /api/events/{id}/join:
+    $ref: 'paths/events.yaml#/api/events/{id}/join'
 
 components:
   securitySchemes:
