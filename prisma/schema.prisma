@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
   output   = "../src/generated/prisma"
@@ -15,28 +9,26 @@ datasource db {
 }
 
 model User {
-  id       String @id @default(uuid())
-  email    String @unique
-  username String @unique
-  password String
-  role Role @default(USER)
-
-  ownedGames      Game[]          @relation("UserOwnedGames")
-  hostedEvents    Event[]         @relation("UserHostedEvents")
-  attendingEvents Event[]         @relation("UserAttendingEvents")
+  id              String  @id @default(uuid())
+  email           String  @unique
+  username        String  @unique
+  password        String
+  role            Role    @default(USER)
+  hostedEvents    Event[] @relation("UserHostedEvents")
+  ownedGames      Game[]  @relation("UserOwnedGames")
   votes           Vote[]
+  attendingEvents Event[] @relation("UserAttendingEvents")
 }
 
 model Game {
-  id          String @id @default(uuid())
+  id          String  @id @default(uuid())
   name        String
   minPlayers  Int
   maxPlayers  Int
   description String?
-
-  ownerId String
-  owner   User   @relation("UserOwnedGames", fields: [ownerId], references: [id], onDelete: Cascade)
-  votes   Vote[]
+  ownerId     String
+  owner       User    @relation("UserOwnedGames", fields: [ownerId], references: [id], onDelete: Cascade)
+  votes       Vote[]
 }
 
 model Event {
@@ -45,11 +37,10 @@ model Event {
   location    String
   eventDate   DateTime
   description String?
-
-  hostId    String
-  host      User            @relation("UserHostedEvents", fields: [hostId], references: [id], onDelete: Cascade)
-  attendees User[]          @relation("UserAttendingEvents")
-  votes     Vote[]
+  hostId      String
+  host        User     @relation("UserHostedEvents", fields: [hostId], references: [id], onDelete: Cascade)
+  votes       Vote[]
+  attendees   User[]   @relation("UserAttendingEvents")
 }
 
 model Vote {
@@ -57,10 +48,9 @@ model Vote {
   userId  String
   eventId String
   gameId  String
-
-  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
-  event Event @relation(fields: [eventId], references: [id], onDelete: Cascade)
-  game  Game  @relation(fields: [gameId], references: [id], onDelete: Cascade)
+  event   Event  @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  game    Game   @relation(fields: [gameId], references: [id], onDelete: Cascade)
+  user    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([userId, eventId])
 }
